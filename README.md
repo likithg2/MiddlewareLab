@@ -87,25 +87,6 @@ The API checks the `token` query parameter before allowing access. This is a bas
 
 The final middleware returns an HTTP 404 status when no earlier handler responds to the request.
 
-## ⚠️ Important Note
-
-In the current implementation, the `/api` access-control middleware calls `next()` when the token is correct but then continues executing and sends `Access Denied!!` as well.
-
-Use `return next()` to stop execution after granting access:
-
-```js
-app.use("/api", (req, res, next) => {
-    const { token } = req.query;
-
-    if (token === "giveaccess") {
-        return next();
-    }
-
-    return res.status(403).send("Access Denied!!");
-});
-```
-
-This ensures that valid tokens reach the API route and invalid tokens receive an HTTP 403 Forbidden response.
 
 ## 👨‍💻 Contributor
 
